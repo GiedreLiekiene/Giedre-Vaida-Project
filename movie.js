@@ -41,7 +41,7 @@ function formatMovielist() {
                 if (movie.primaryImage == null) {
                     movie.primaryImage = { id: '0', width: 720, height: 720, url: "/img/coming-soon.jpg" };
                 }
-                movieList.innerHTML += formatMovie(movie);
+                movieList.innerHTML += formatMovie(movie, true);
             })
         })
         .catch(err => console.error(err));
@@ -56,8 +56,8 @@ function loadMovie(movieId) {
         }
     };
 
-return fetch(`https://moviesdatabase.p.rapidapi.com/titles/x/titles-by-ids?idsList%5B0%5D=${movieId}`, options)
-    .then(response => response.json());
+    return fetch(`https://moviesdatabase.p.rapidapi.com/titles/x/titles-by-ids?idsList%5B0%5D=${movieId}`, options)
+        .then(response => response.json());
 }
 
 function filterByCategory(category) {
