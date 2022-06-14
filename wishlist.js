@@ -7,19 +7,24 @@ function saveWishlist(wishlist) {
 }
 
 function addToWishlist(movieId) {
+    console.log("addToWishlist");
     let wishlist = loadWishlist();
-    wishlist.push(movieId);
-    saveWishlist(wishlist);
+
+    if (!wishlist.includes(movieId)) {
+        wishlist.push(movieId);
+        saveWishlist(wishlist);
+    }
 }
 
 function showWishlist() {
     let wishlistElement = document.getElementById('wish-list');
     let wishlist = loadWishlist();
     console.log(wishlist)
-    wishlist.map(wish => {
-        let cardElement = `
-    <p class="card-text">${wish}</p> `
-        wishlistElement.innerHTML += cardElement;
+    wishlist.map(movieId => {
+        loadMovie(movieId).then(movie => {
+            console.log("movie", movieId, movie)
+            wishlistElement.innerHTML += formatMovie(movie.results[0], false);
+        })
     })
 }
 
