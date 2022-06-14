@@ -13,7 +13,6 @@ function formatMovie(movie, addWishlistButton) {
                     <div class="card-body">
                     <h5 class="card-title">${movie.titleText.text}</h5>
                     <p class="card-text">${movie.releaseDate.year}</p>                    
-                    <p class="card-text">Position: ${movie.position}</p>
                     <!-- <a href="/wishlist.html" class="btn btn-light btn-sm">Add to Wishlist</a> -->
                     ${wishlistButton}
                     </div >
