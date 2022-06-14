@@ -51,7 +51,7 @@ function loadMovie(movieId) {
         }
     };
 
-    fetch('https://moviesdatabase.p.rapidapi.com/titles/x/titles-by-ids?idsList%5B0%5D=tt13496236', options)
+    fetch(`https://moviesdatabase.p.rapidapi.com/titles/x/titles-by-ids?idsList%5B0%5D=${movieId}`, options)
         .then(response => response.json())
         .then(response => console.log(response))
         .catch(err => console.error(err));
