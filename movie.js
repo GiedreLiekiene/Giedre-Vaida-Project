@@ -10,12 +10,12 @@ function formatMovie(movie, addWishlistButton) {
     }
 
     return `
-            <div class="col-md-2 mb-3">
-                <div class="card" style="height: 35rem;">
+            <div>
+                <div class="card">
                 <img src="${movie.primaryImage.url}" class="card-img-top" alt="...">
                     <div class="card-body">
                     <h5 class="card-title">${movie.titleText.text}</h5>
-                    <p class="card-text">Comming ${movie.releaseDate.year}</p>
+                    <p class="card-text">${movie.releaseDate.year}</p>
                     <!-- <a href="/wishlist.html" class="btn btn-light btn-sm">Add to Wishlist</a> -->
                     ${wishlistButton}
                     </div >
@@ -31,18 +31,15 @@ function formatMovielist() {
             'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com'
         }
     };
-
-    fetch('https://moviesdatabase.p.rapidapi.com/titles/x/upcoming?info=mini_info&limit=50&page=1&titleType=movie', options)
+    
+    fetch('https://moviesdatabase.p.rapidapi.com/titles?info=mini_info&limit=50&page=1&titleType=movie&startYear=2010&endYear=2021', options)
         .then(response => response.json())
         .then(response => {
             let movies = response.results;
-            console.log(movies);
+            movies = movies.filter(movie => movie.primaryImage != null);
             movies.map(movie => {
-                if (movie.primaryImage == null) {
-                    movie.primaryImage = { id: '0', width: 720, height: 720, url: "/img/coming-soon.jpg" };
-                }
                 movieList.innerHTML += formatMovie(movie, true);
-            })
+            })                
         })
         .catch(err => console.error(err));
 }
@@ -71,15 +68,16 @@ function filterByCategory(category) {
         }
     };
 
-    fetch(`https://moviesdatabase.p.rapidapi.com/titles/x/upcoming?info=mini_info&limit=50&page=1&titleType=movie&genre=${category}`, options)
+    fetch(`https://moviesdatabase.p.rapidapi.com/titles?info=mini_info&page=1&titleType=movie&genre=${category}&startYear=2010&endYear=2020`, options)
         .then(response => response.json())
         .then(response => {
             let categoryMovies = response.results;
+            if (categoryMovies.length === 0) {
+                movieList.innerHTML = '<h3>Sorry, no movies found.</h3>'
+            }
             console.log(categoryMovies);
+            categoryMovies = categoryMovies.filter(movie => movie.primaryImage != null);
             categoryMovies.map(movie => {
-                if (movie.primaryImage == null) {
-                    movie.primaryImage = { id: '0', width: 720, height: 720, url: "/img/coming-soon.jpg" };
-                }
                 movieList.innerHTML += formatMovie(movie);
             })
         })
