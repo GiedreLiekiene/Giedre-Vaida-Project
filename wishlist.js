@@ -7,9 +7,13 @@ function saveWishlist(wishlist) {
 }
 
 function addToWishlist(movieId) {
+    console.log("addToWishlist");
     let wishlist = loadWishlist();
-    wishlist.push(movieId);
-    saveWishlist(wishlist);
+
+    if (!wishlist.includes(movieId)) {
+        wishlist.push(movieId);
+        saveWishlist(wishlist);
+    }
 }
 
 function showWishlist() {
