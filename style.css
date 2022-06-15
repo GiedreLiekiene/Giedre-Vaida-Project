@@ -27,3 +27,21 @@
     max-height: fit-content;
     object-fit: fill;
 }
+
+.card:hover {
+    width: 95%;
+    height: 95%;
+    font-size: 2rem;
+}
+
+.card.clicked:hover {
+    width: 95%;
+    height: 95%;
+    font-size: 2rem;
+}
+
+.card.clicked:hover.line {
+    width: 95%;
+    height: 95%;
+    font-size: 2rem;
+}

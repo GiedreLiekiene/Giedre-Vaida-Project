@@ -31,7 +31,7 @@ function formatMovielist() {
             'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com'
         }
     };
-    
+
     fetch('https://moviesdatabase.p.rapidapi.com/titles?info=mini_info&limit=50&page=1&titleType=movie&startYear=2010&endYear=2021', options)
         .then(response => response.json())
         .then(response => {
@@ -39,7 +39,7 @@ function formatMovielist() {
             movies = movies.filter(movie => movie.primaryImage != null);
             movies.map(movie => {
                 movieList.innerHTML += formatMovie(movie, true);
-            })                
+            })
         })
         .catch(err => console.error(err));
 }
