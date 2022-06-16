@@ -11,11 +11,10 @@ function formatMovie(movie, addWishlistButton) {
     return `
             <div>
                 <div class="card">
-                <img src="${movie.primaryImage.url}" class="card-img-top" alt="...">
+                <a href="/description.html?${movie.id}"><img src="${movie.primaryImage.url}" class="card-img-top" alt="..."></a>
                     <div class="card-body">
                     <h5 class="card-title">${movie.titleText.text}</h5>
                     <p class="card-text">${movie.releaseDate.year}</p>
-                    <!-- <a href="/wishlist.html" class="btn btn-light btn-sm">Add to Wishlist</a> -->
                     ${wishlistButton}
                     </div >
                 </div >
@@ -71,7 +70,3 @@ function filterByCategory(category) {
         })
         .catch(err => console.error(err));
 }
-
-
-
-formatMovielist();
