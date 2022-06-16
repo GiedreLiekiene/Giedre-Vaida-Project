@@ -31,7 +31,7 @@ const options = {
 
 function formatMovielist() {
 
-    fetch('https://moviesdatabase.p.rapidapi.com/titles?info=mini_info&limit=50&page=1&titleType=movie&startYear=2010&endYear=2021', options)
+    fetch('https://moviesdatabase.p.rapidapi.com/titles?info=mini_info&limit=50&page=1&titleType=movie&startYear=2000&endYear=2021&list=most_pop_movies', options)
         .then(response => response.json())
         .then(response => {
             let movies = response.results;
