@@ -45,3 +45,24 @@
     height: 95%;
     font-size: 2rem;
 }
+
+.descriptioncard {
+    width: 190px;
+    height: fit-content;
+    margin: 10px;
+}
+
+.descriptioncard-img {
+    width: 100%;
+    height: 13vw;
+    object-fit: cover;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.descriptioncard-body {
+    width: 100%;
+    max-height: fit-content;
+    object-fit: fill;
+}
