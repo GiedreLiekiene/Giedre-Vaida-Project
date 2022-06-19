@@ -15,7 +15,7 @@ function showDescription(movieId) {
         descriptionElement.innerHTML =
             `<div>
                 <div class="descriptioncard">
-                <a href="/description.html?${movie.id}"><img src="${movie.primaryImage.url}" class="card-img-top" alt="..."></a>
+                    <img src="${movie.primaryImage.url}" class="descriptioncard-img" alt="..."> 
                     <div class="descriptioncard-body">
                     <h5 class="descriptioncard-title">${movie.titleText.text}</h5>
                     <p class="descriptioncard-text">${movie.releaseDate.year}</p>
