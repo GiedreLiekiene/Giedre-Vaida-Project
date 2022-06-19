@@ -1,12 +1,19 @@
 let movieList = document.getElementById('movie-list');
 formatMovielist();
 
-function formatMovie(movie, addWishlistButton) {
+function formatMovie(movie, addWishlistButton, addRemoveButton) {
     let wishlistButton;
     if (addWishlistButton) {
         wishlistButton = `<a href="javascript:addToWishlist('${movie.id}')" class="btn btn-light btn-sm">Add to Wishlist</a>`
     } else {
         wishlistButton = "";
+    }
+
+    let removeButton;
+    if (addRemoveButton) {
+        removeButton = `<a href="javascript:removeFromWishlist('${movie.id}')" class="btn btn-danger btn-sm">Remove</a>`
+    } else {
+        removeButton = "";
     }
 
     return `
@@ -18,6 +25,7 @@ function formatMovie(movie, addWishlistButton) {
                     <p class="card-text">${movie.releaseDate.year}</p>
                     <!-- <a href="/wishlist.html" class="btn btn-light btn-sm">Add to Wishlist</a> -->
                     ${wishlistButton}
+                    ${removeButton}
                     </div >
                 </div >
             </div > `
@@ -38,7 +46,7 @@ function formatMovielist() {
             let movies = response.results;
             movies = movies.filter(movie => movie.primaryImage != null);
             movies.map(movie => {
-                movieList.innerHTML += formatMovie(movie, true);
+                movieList.innerHTML += formatMovie(movie, true, false);
             })                
         })
         .catch(err => console.error(err));
