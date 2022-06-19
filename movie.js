@@ -1,4 +1,8 @@
 let movieList = document.getElementById('movie-list');
+let loadMoreBtn = document.getElementById('load-more');
+let page = 1;
+let movies = [];
+let category;
 
 function formatMovie(movie, addWishlistButton, addRemoveButton) {
     let wishlistButton;
@@ -37,12 +41,12 @@ const options = {
     }
 };
 
-function formatMovielist() {
-
-    fetch('https://moviesdatabase.p.rapidapi.com/titles?info=mini_info&limit=50&page=1&titleType=movie&startYear=2000&endYear=2022&list=most_pop_movies', options)
+function formatMovielist(page) {
+    console.log(page);
+    fetch(`https://moviesdatabase.p.rapidapi.com/titles?info=mini_info&limit=10&page=${page}&titleType=movie&startYear=2000&endYear=2022&list=most_pop_movies`, options)
         .then(response => response.json())
         .then(response => {
-            let movies = response.results;
+            movies = response.results;
             movies = movies.filter(movie => movie.primaryImage != null);
             movies.map(movie => {
                 movieList.innerHTML += formatMovie(movie, true, false);
@@ -52,29 +56,70 @@ function formatMovielist() {
 }
 
 function loadMovie(movieId) {
-
-
     return fetch(`https://moviesdatabase.p.rapidapi.com/titles/x/titles-by-ids?idsList%5B0%5D=${movieId}`, options)
         .then(response => response.json());
 }
 
-function filterByCategory(category) {
-    movieList.innerHTML = "";
-
-
-
-    fetch(`https://moviesdatabase.p.rapidapi.com/titles?info=mini_info&page=1&titleType=movie&genre=${category}&startYear=2010&endYear=2020`, options)
+function filterByCategory(category, page) {
+    console.log(page);
+    fetch(`https://moviesdatabase.p.rapidapi.com/titles?info=mini_info&page=${page}&titleType=movie&genre=${category}&startYear=2000&endYear=2022&list=most_pop_movies`, options)
         .then(response => response.json())
         .then(response => {
-            let categoryMovies = response.results;
-            if (categoryMovies.length === 0) {
+            movies = response.results;
+            if (movies.length === 0) {
                 movieList.innerHTML = '<h3>Sorry, no movies found.</h3>'
             }
-            console.log(categoryMovies);
-            categoryMovies = categoryMovies.filter(movie => movie.primaryImage != null);
-            categoryMovies.map(movie => {
-                movieList.innerHTML += formatMovie(movie);
+            console.log(movies);
+            movies = movies.filter(movie => movie.primaryImage != null);
+            movies.map(movie => {
+                movieList.innerHTML += formatMovie(movie, true, false);
             })
         })
         .catch(err => console.error(err));
+        console.log(category);
 }
+
+function filterByCategoryFirstPage(chosenCategory) {
+    page = 1;
+    category = chosenCategory;
+    movieList.innerHTML = "";
+    filterByCategory(chosenCategory, page);
+}
+
+    function searchInList() {
+        let keyword = document.getElementById('searchbar').value;
+        console.log(keyword);
+        movieList.innerHTML = "";
+        movies = movies.filter(movie => movie.titleText.text.includes(keyword));
+            movies.map(movie => {
+                movieList.innerHTML += formatMovie(movie);
+            })
+    }
+
+    function search() {
+        let keyword = document.getElementById('searchbar').value;
+        movieList.innerHTML = "";
+        fetch(`https://moviesdatabase.p.rapidapi.com/titles/search/title/${keyword}?info=mini_info&limit=10&page=1&titleType=movie`, options)
+            .then(response => response.json())
+            .then(response => {
+                movies = response.results;
+                console.log(movies);
+
+                movies.map(movie => {
+                    movieList.innerHTML += formatMovie(movie);
+                })
+            })
+            .catch(err => console.error(err));
+    }
+
+    function loadMore(category){
+        console.log(category);
+        page++;
+        if (category == 'undefined'){
+            formatMovielist(page);
+        }
+        else {
+            filterByCategory(category, page);
+        }
+    }
+

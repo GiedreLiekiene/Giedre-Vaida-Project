@@ -39,18 +39,23 @@
             <li class="nav-item">
               <a class="nav-link" href="/wishlist.html">Wishlist</a>
             </li>
-
           </ul>
+
+          <!-- search -->
           <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <input class="form-control me-2" id="searchbar" type="text" placeholder="Search" aria-label="Search">
+            <div class="btn btn-outline-success" id="search-btn" onclick="search()">Search</div>
           </form>
         </div>
       </div>
     </nav>
 
     <!-- movies list -->
-    <div id="movie-list">
+    <div id="movie-list"></div>
+
+    <!-- load more button -->
+    <div id="load-more">
+      <button class="btn btn-info mt-2" onclick="loadMore(`${category}`)">Load More</button>
     </div>
   </div>
   
@@ -62,7 +67,7 @@
   <script src="/categories.js"></script>
   <script async>
     getCategories();
-    formatMovielist();
+    formatMovielist(page);
   </script>
 
 </body>

@@ -3,7 +3,7 @@
 let categoryList = document.getElementById('category-menu');
 
 function generateListElement(category) {
-    return `<li><a class="dropdown-item" onclick="filterByCategory('${category}')">${category}</a></li>`;
+    return `<li><a class="dropdown-item" onclick="filterByCategoryFirstPage('${category}')">${category}</a></li>`;
 }
 
 function getCategories() {
