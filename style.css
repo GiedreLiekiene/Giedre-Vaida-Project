@@ -1,4 +1,5 @@
-#movie-list, #wish-list {
+#movie-list,
+#wish-list {
     width: auto;
     display: flex;
     flex-direction: row;
@@ -16,10 +17,81 @@
     width: 100%;
     height: 13vw;
     object-fit: cover;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 .card-body {
     width: 100%;
     max-height: fit-content;
     object-fit: fill;
+}
+
+.card:hover {
+    width: 95%;
+    height: 95%;
+    font-size: 2rem;
+}
+
+.card.clicked:hover {
+    width: 95%;
+    height: 95%;
+    font-size: 2rem;
+}
+
+.card.clicked:hover.line {
+    width: 95%;
+    height: 95%;
+    font-size: 2rem;
+}
+
+
+.descriptioncard {
+    width: 100%;
+    height: fit-content;
+    margin: 10px;
+
+}
+
+.descriptioncard-img {
+    width: 30%;
+    height: auto;
+    object-fit: cover;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    float: left;
+}
+
+.descriptioncard-body {
+    width: 100%;
+    height: fit-content;
+    object-fit: fill;
+    text-align: left;
+}
+
+.descriptioncard-title {
+    width: 100%;
+    height: fit-content;
+    object-fit: fill;
+    text-align: left;
+
+}
+
+.descriptioncard-text {
+    width: 100%;
+    height: fit-content;
+    object-fit: fill;
+    text-align: left;
+
+}
+
+.descriptioncard-description {
+    width: 100%;
+    height: fit-content;
+    object-fit: fill;
+    text-align: left;
+
+
 }
