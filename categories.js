@@ -12,7 +12,9 @@ function getCategories() {
         .then(response => {
             let categories = response.results;
             categories.map(category => {
-                categoryList.innerHTML += generateListElement(category);
+                if (category !== null) {
+                    categoryList.innerHTML += generateListElement(category);
+                }
             })
         })
         .catch(err => console.error(err));
