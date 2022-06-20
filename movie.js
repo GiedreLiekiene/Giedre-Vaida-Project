@@ -19,6 +19,7 @@ function formatMovie(movie, addWishlistButton, addRemoveButton) {
         removeButton = "";
     }
 
+    console.log(movie)
     return `
             <div>
                 <div class="card">
@@ -50,7 +51,7 @@ function formatMovielist(page) {
             movies = movies.filter(movie => movie.primaryImage != null);
             movies.map(movie => {
                 movieList.innerHTML += formatMovie(movie, true, false);
-            })                
+            })
         })
         .catch(err => console.error(err));
 }
@@ -76,7 +77,7 @@ function filterByCategory(category, page) {
             })
         })
         .catch(err => console.error(err));
-        console.log(category);
+    console.log(category);
 }
 
 function filterByCategoryFirstPage(chosenCategory) {
@@ -86,40 +87,41 @@ function filterByCategoryFirstPage(chosenCategory) {
     filterByCategory(chosenCategory, page);
 }
 
-    function searchInList() {
-        let keyword = document.getElementById('searchbar').value;
-        console.log(keyword);
-        movieList.innerHTML = "";
-        movies = movies.filter(movie => movie.titleText.text.includes(keyword));
+function searchInList() {
+    let keyword = document.getElementById('searchbar').value;
+    console.log(keyword);
+    movieList.innerHTML = "";
+    movies = movies.filter(movie => movie.titleText.text.includes(keyword));
+    movies.map(movie => {
+        movieList.innerHTML += formatMovie(movie);
+    })
+}
+
+function search() {
+    let keyword = document.getElementById('searchbar').value;
+    movieList.innerHTML = "";
+    fetch(`https://moviesdatabase.p.rapidapi.com/titles/search/title/${keyword}?info=mini_info&limit=50&page=1&titleType=movie&sort=year.decr`, options)
+        .then(response => response.json())
+        .then(response => {
+            movies = response.results;
+            console.log(movies);
+
+            movies = movies.filter(movie => movie.primaryImage != null && movie.releaseDate != null);
             movies.map(movie => {
                 movieList.innerHTML += formatMovie(movie);
             })
-    }
+        })
+        .catch(err => console.error(err));
+}
 
-    function search() {
-        let keyword = document.getElementById('searchbar').value;
-        movieList.innerHTML = "";
-        fetch(`https://moviesdatabase.p.rapidapi.com/titles/search/title/${keyword}?info=mini_info&limit=10&page=1&titleType=movie`, options)
-            .then(response => response.json())
-            .then(response => {
-                movies = response.results;
-                console.log(movies);
-
-                movies.map(movie => {
-                    movieList.innerHTML += formatMovie(movie);
-                })
-            })
-            .catch(err => console.error(err));
+function loadMore(category) {
+    console.log(category);
+    page++;
+    if (category == 'undefined') {
+        formatMovielist(page);
     }
-
-    function loadMore(category){
-        console.log(category);
-        page++;
-        if (category == 'undefined'){
-            formatMovielist(page);
-        }
-        else {
-            filterByCategory(category, page);
-        }
+    else {
+        filterByCategory(category, page);
     }
+}
 
