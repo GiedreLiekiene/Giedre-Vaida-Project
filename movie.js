@@ -65,6 +65,7 @@ function filterByCategoryFirstPage(chosenCategory) {
     page = 1;
     category = chosenCategory;
     movieList.innerHTML = "";
+    keyword = "";
     loadMoreBtn.classList.remove("disabled");
     filterByCategory(chosenCategory, page);
 }
@@ -95,6 +96,7 @@ function searchFirstPage() {
 }
 
 function search(page) {
+    console.log('page: ' + page);
     loadMoreBtn.classList.remove("disabled");
     keyword = searchInput.value;
     fetch(`https://moviesdatabase.p.rapidapi.com/titles/search/title/${keyword}?info=mini_info&limit=20&page=${page}&titleType=movie&sort=year.decr`, options)
@@ -121,14 +123,19 @@ searchInput.addEventListener("keypress", function(event) {
 
 function loadMore(category) {
     page++;
-    if (category != 'undefined') {
-        filterByCategory(category, page);
-    }
+    console.log(keyword);
+    console.log(category);
     if (keyword) {
+        console.log('if keyword true');
         search(page);
     }
-    else {
+    else if (category == 'undefined') {
+        console.log('if movie list true');
         formatMovielist(page);
+    }
+    else {
+        console.log(category);
+        filterByCategory(category, page);
     }
 }
 
