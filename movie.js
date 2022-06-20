@@ -30,7 +30,7 @@ function formatMovie(movie, addWishlistButton, addRemoveButton) {
     }
 
     return `
-            <div class="col">
+            <div class="my-3 mx-2">
                 <div class="card h-100">
                     <a href="/description.html?${movie.id}">
                     <img src="${movie.primaryImage.url}" class="card-img-top" alt="..."></a>
