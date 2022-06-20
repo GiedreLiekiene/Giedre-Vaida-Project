@@ -17,7 +17,7 @@ const options = {
 function formatMovie(movie, addWishlistButton, addRemoveButton) {
     let wishlistButton;
     if (addWishlistButton) {
-        wishlistButton = `<a href="javascript:addToWishlist('${movie.id}')" class="btn btn-light btn-sm">Add to Wishlist</a>`
+        wishlistButton = `<a href="javascript:addToWishlist('${movie.id}')" class="btn btn-secondary btn-sm">Add to Wishlist</a>`
     } else {
         wishlistButton = "";
     }
@@ -30,15 +30,18 @@ function formatMovie(movie, addWishlistButton, addRemoveButton) {
     }
 
     return `
-            <div>
-                <div class="card">
-                <a href="/description.html?${movie.id}"><img src="${movie.primaryImage.url}" class="card-img-top" alt="..."></a>
+            <div class="col">
+                <div class="card h-100">
+                    <a href="/description.html?${movie.id}">
+                    <img src="${movie.primaryImage.url}" class="card-img-top" alt="..."></a>
                     <div class="card-body">
-                    <h5 class="card-title">${movie.titleText.text}</h5>
-                    <p class="card-text">${movie.releaseDate.year}</p>
-                    ${wishlistButton}
-                    ${removeButton}
+                        <h5 class="card-title">${movie.titleText.text}</h5>
+                        <p class="card-text">${movie.releaseDate.year}</p>
                     </div >
+                        <div class="p-3">
+                        ${wishlistButton}
+                        ${removeButton}
+                    </div>
                 </div >
             </div > `
 }

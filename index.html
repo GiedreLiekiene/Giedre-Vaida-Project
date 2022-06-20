@@ -12,50 +12,52 @@
 </head>
 
 <body>
-  <div class="container-md">
 
-    <!-- nav bar -->
-    <nav class="navbar navbar-expand-lg bg-light mb-3">
-      <div class="container-md">
-        <a class="navbar-brand" href="/index.html">MOVIES</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+  <!-- nav bar -->
+  <nav class="navbar navbar-expand-lg bg-light mb-3">
+    <div class="container-md">
+      <a class="navbar-brand" href="/index.html">MOVIES</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
 
-            <!-- categories -->
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Categories
-              </a>
-              <ul class="dropdown-menu" id="category-menu" aria-labelledby="navbarDropdown">
-              </ul>
-            </li>
+          <!-- categories -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Categories
+            </a>
+            <ul class="dropdown-menu" id="category-menu" aria-labelledby="navbarDropdown">
+            </ul>
+          </li>
 
-            <!-- wishlist -->
-            <li class="nav-item">
-              <a class="nav-link" href="/wishlist.html">Wishlist</a>
-            </li>
-          </ul>
+          <!-- wishlist -->
+          <li class="nav-item">
+            <a class="nav-link" href="/wishlist.html">Wishlist</a>
+          </li>
+        </ul>
 
-          <!-- search -->
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" id="searchbar" type="text" placeholder="Search" aria-label="Search">
-            <div class="btn btn-outline-success" id="search-btn" onclick="searchFirstPage(`${page}`)">Search</div>
-          </form>
-        </div>
+        <!-- search -->
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" id="searchbar" type="text" placeholder="Search" aria-label="Search">
+          <div class="btn btn-outline-success" id="search-btn" onclick="searchFirstPage(`${page}`)">Search</div>
+        </form>
       </div>
-    </nav>
+    </div>
+  </nav>
 
+  <div class="container-md">
     <!-- movies list -->
-    <div id="movie-list"></div>
+    <div id="movie-list" class="row row-cols-1 row-cols-md-6 g-5">
+
+    </div>
 
     <!-- load more button -->
     <div id="load-more">
-      <button id="load-more-btn" class="btn btn-info mt-2 mb-5" onclick="loadMore(`${category}`)">Load More</button>
+      <button id="load-more-btn" class="btn btn-warning mt-3 mb-5" onclick="loadMore(`${category}`)">Load More</button>
     </div>
   </div>
   
