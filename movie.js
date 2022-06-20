@@ -114,6 +114,14 @@ function search() {
         .catch(err => console.error(err));
 }
 
+let input = document.getElementById('searchbar');
+input.addEventListener("keypress", function(event) {
+    if (event.key === "Enter"){
+        event.preventDefault();
+        document.getElementById('search-btn').click();
+    }
+})
+
 function loadMore(category) {
     console.log(category);
     page++;
