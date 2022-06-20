@@ -1,8 +1,18 @@
 let movieList = document.getElementById('movie-list');
-let loadMoreBtn = document.getElementById('load-more');
+let loadMoreBtn = document.getElementById('load-more-btn');
+let searchInput = document.getElementById('searchbar');
 let page = 1;
 let movies = [];
 let category;
+let keyword;
+
+const options = {
+    method: 'GET',
+    headers: {
+        'X-RapidAPI-Key': '125a1d1741msh07b331c5ca1994dp1675cejsnd66baa5d2be3',
+        'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com'
+    }
+};
 
 function formatMovie(movie, addWishlistButton, addRemoveButton) {
     let wishlistButton;
@@ -19,7 +29,6 @@ function formatMovie(movie, addWishlistButton, addRemoveButton) {
         removeButton = "";
     }
 
-    console.log(movie)
     return `
             <div>
                 <div class="card">
@@ -34,16 +43,7 @@ function formatMovie(movie, addWishlistButton, addRemoveButton) {
             </div > `
 }
 
-const options = {
-    method: 'GET',
-    headers: {
-        'X-RapidAPI-Key': '125a1d1741msh07b331c5ca1994dp1675cejsnd66baa5d2be3',
-        'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com'
-    }
-};
-
 function formatMovielist(page) {
-    console.log(page);
     fetch(`https://moviesdatabase.p.rapidapi.com/titles?info=mini_info&limit=10&page=${page}&titleType=movie&startYear=2000&endYear=2022&list=most_pop_movies`, options)
         .then(response => response.json())
         .then(response => {
@@ -61,51 +61,49 @@ function loadMovie(movieId) {
         .then(response => response.json());
 }
 
+function filterByCategoryFirstPage(chosenCategory) {
+    page = 1;
+    category = chosenCategory;
+    movieList.innerHTML = "";
+    loadMoreBtn.classList.remove("disabled");
+    filterByCategory(chosenCategory, page);
+}
+
 function filterByCategory(category, page) {
-    console.log(page);
+    loadMoreBtn.classList.remove("disabled");
     fetch(`https://moviesdatabase.p.rapidapi.com/titles?info=mini_info&page=${page}&titleType=movie&genre=${category}&startYear=2000&endYear=2022&list=most_pop_movies`, options)
         .then(response => response.json())
         .then(response => {
             movies = response.results;
             if (movies.length === 0) {
                 movieList.innerHTML = '<h3>Sorry, no movies found.</h3>'
+                loadMoreBtn.classList.add("disabled");
             }
-            console.log(movies);
             movies = movies.filter(movie => movie.primaryImage != null);
             movies.map(movie => {
                 movieList.innerHTML += formatMovie(movie, true, false);
             })
         })
         .catch(err => console.error(err));
-    console.log(category);
 }
 
-function filterByCategoryFirstPage(chosenCategory) {
+function searchFirstPage() {
     page = 1;
-    category = chosenCategory;
     movieList.innerHTML = "";
-    filterByCategory(chosenCategory, page);
+    loadMoreBtn.classList.remove("disabled");
+    search(page);
 }
 
-function searchInList() {
-    let keyword = document.getElementById('searchbar').value;
-    console.log(keyword);
-    movieList.innerHTML = "";
-    movies = movies.filter(movie => movie.titleText.text.includes(keyword));
-    movies.map(movie => {
-        movieList.innerHTML += formatMovie(movie);
-    })
-}
-
-function search() {
-    let keyword = document.getElementById('searchbar').value;
-    movieList.innerHTML = "";
-    fetch(`https://moviesdatabase.p.rapidapi.com/titles/search/title/${keyword}?info=mini_info&limit=50&page=1&titleType=movie&sort=year.decr`, options)
+function search(page) {
+    loadMoreBtn.classList.remove("disabled");
+    keyword = searchInput.value;
+    fetch(`https://moviesdatabase.p.rapidapi.com/titles/search/title/${keyword}?info=mini_info&limit=20&page=${page}&titleType=movie&sort=year.decr`, options)
         .then(response => response.json())
         .then(response => {
             movies = response.results;
-            console.log(movies);
-
+            if (movies.length < 20){
+                loadMoreBtn.classList.add("disabled");
+            }
             movies = movies.filter(movie => movie.primaryImage != null && movie.releaseDate != null);
             movies.map(movie => {
                 movieList.innerHTML += formatMovie(movie);
@@ -114,8 +112,7 @@ function search() {
         .catch(err => console.error(err));
 }
 
-let input = document.getElementById('searchbar');
-input.addEventListener("keypress", function(event) {
+searchInput.addEventListener("keypress", function(event) {
     if (event.key === "Enter"){
         event.preventDefault();
         document.getElementById('search-btn').click();
@@ -123,13 +120,15 @@ input.addEventListener("keypress", function(event) {
 })
 
 function loadMore(category) {
-    console.log(category);
     page++;
-    if (category == 'undefined') {
-        formatMovielist(page);
+    if (category != 'undefined') {
+        filterByCategory(category, page);
+    }
+    if (keyword) {
+        search(page);
     }
     else {
-        filterByCategory(category, page);
+        formatMovielist(page);
     }
 }
 
