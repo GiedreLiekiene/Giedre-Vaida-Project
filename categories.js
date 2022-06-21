@@ -1,5 +1,3 @@
-
-
 let categoryList = document.getElementById('category-menu');
 
 function generateListElement(category) {

@@ -106,7 +106,7 @@ function search(page) {
         .then(response => response.json())
         .then(response => {
             movies = response.results;
-            if (movies.length < 20){
+            if (movies.length < 20) {
                 loadMoreBtn.classList.add("disabled");
             }
             movies = movies.filter(movie => movie.primaryImage != null && movie.releaseDate != null);
@@ -117,8 +117,8 @@ function search(page) {
         .catch(err => console.error(err));
 }
 
-searchInput.addEventListener("keypress", function(event) {
-    if (event.key === "Enter"){
+searchInput.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
         event.preventDefault();
         document.getElementById('search-btn').click();
     }
